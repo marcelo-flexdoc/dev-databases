@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgadmin
+  namespace: pgadmin-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgadmin
+  template:
+    metadata:
+      labels:
+        app: pgadmin        
+    spec:
+      containers:
+        - name: pgadmin
+          image: dpage/pgadmin4
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: "200Mi"
+              cpu: "200m"
+            requests:
+              memory: "100Mi"
+              cpu: "50m"
+          envFrom:
+            - configMapRef:
+                name: pgadmin-config
+            - secretRef:
+                name: pgadmin-secret
+          ports:
+            - containerPort: 5454
+
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5454
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 20
+
+          volumeMounts:
+            - name: pgadmin-data
+              mountPath: /var/lib/pgadmin              
+              
+      volumes:
+        - name: pgadmin-data
+          emptyDir: {}
+            
