@@ -1,17 +1,11 @@
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: pgadmin-svc
-#   namespace: pgadmin-ns
-# spec:
-#   type: ClusterIP
-#   selector:
-#     app: pgadmin
-#   ports:
-#     - port: 5454
-#       protocol: TCP
-
-#### NAO USAR SERVICE, PARA ACESSAR O PGADMIN USE PORT-FORWARD ####
-# kubectl port-forward -n pgadmin-ns --address 0.0.0.0 deploy/pgadmin 5454:5454
-# e acesse http://localhost:5454 
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgadmin-svc
+  namespace: pgadmin-ns
+spec:
+  selector:
+    app: pgadmin
+  ports:
+    - port: 5454
 

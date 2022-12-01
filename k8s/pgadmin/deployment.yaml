@@ -11,7 +11,10 @@ spec:
   template:
     metadata:
       labels:
-        app: pgadmin        
+        app: pgadmin     
+      annotations:
+        # anotacao apenas para alterar e gerar no deploy sem alterar as configuraçoes
+        image-version: 2022-09-13_1338
     spec:
       containers:
         - name: pgadmin
@@ -34,7 +37,7 @@ spec:
 
           readinessProbe:
             httpGet:
-              path: /
+              path: /pgadmin/login
               port: 5454
             initialDelaySeconds: 10
             periodSeconds: 10
@@ -42,9 +45,14 @@ spec:
 
           volumeMounts:
             - name: pgadmin-data
-              mountPath: /var/lib/pgadmin              
-              
+              mountPath: /var/lib/pgadmin   
+
+          securityContext:
+            runAsUser: 0
+                  
       volumes:
-        - name: pgadmin-data
-          emptyDir: {}
+      - name: pgadmin-data
+        persistentVolumeClaim:
+          claimName: pgadmin-pvc
+
             
