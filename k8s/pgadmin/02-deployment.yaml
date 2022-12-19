@@ -30,29 +30,29 @@ spec:
           envFrom:
             - configMapRef:
                 name: pgadmin-config
-            - secretRef:
-                name: pgadmin-secret
+            # - secretRef:
+            #     name: pgadmin-secret
           ports:
             - containerPort: 5454
 
-          readinessProbe:
-            httpGet:
-              path: /pgadmin/login
-              port: 5454
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            failureThreshold: 20
+          # readinessProbe:
+          #   httpGet:
+          #     path: /pgadmin/login
+          #     port: 5454
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 10
+          #   failureThreshold: 20
 
-          volumeMounts:
-            - name: pgadmin-data
-              mountPath: /var/lib/pgadmin   
+      #     volumeMounts:
+      #       - name: pgadmin-data
+      #         mountPath: /var/lib/pgadmin   
 
-          securityContext:
-            runAsUser: 0
+      #     securityContext:
+      #       runAsUser: 0
                   
-      volumes:
-      - name: pgadmin-data
-        persistentVolumeClaim:
-          claimName: pgadmin-pvc
+      # volumes:
+      # - name: pgadmin-data
+      #   persistentVolumeClaim:
+      #     claimName: pgadmin-pvc
 
             
