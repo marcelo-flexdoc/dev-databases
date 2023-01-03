@@ -30,8 +30,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: pgadmin-config
-            # - secretRef:
-            #     name: pgadmin-secret
+            - secretRef:
+                name: pgadmin-secret
           ports:
             - containerPort: 5454
 
