@@ -1,0 +1,32 @@
+version: "3.9"
+
+# EXECUTE O COMANDO ABAIXO ANTES DE RODAR ESTE DOCKER COMPOSER
+# docker network create bancos-net
+# docker network create flexdoc-net 
+
+# COMANDO PARA RODAR ESTE COMPOSE
+# docker-compose up -d --force-recreate
+
+services:
+  mysql:
+    container_name: mysql
+    image: bitnami/mysql:latest
+    ports:
+      - 3306:3306
+    volumes:
+      - "../volumes/mysql:/bitnami/mysql"
+      # - "./my_custom.cnf:/opt/bitnami/mysql/conf/my_custom.cnf:ro"
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: flexdoc99
+    restart: unless-stopped
+    networks:
+      - bancos-net
+      - flexdoc-net
+
+networks:
+  bancos-net:
+    external: true
+  flexdoc-net:
+    external: true
+      

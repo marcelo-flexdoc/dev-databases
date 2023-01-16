@@ -15,7 +15,6 @@ services:
       - 3306:3306
     volumes:
       - "./volumes/mysql:/bitnami/mysql"
-      # - "./my_custom.cnf:/opt/bitnami/mysql/conf/my_custom.cnf:ro"
     environment:
       MYSQL_ROOT_USER: root
       MYSQL_ROOT_PASSWORD: flexdoc99
@@ -46,16 +45,16 @@ services:
 
   # pdAdmin conecta o postgres do docker somente usando o host como "host.docker.internal"
   pgadmin:
-    container_name: pgadmin-4
+    container_name: pgadmin
     image: dpage/pgadmin4
     ports:
       - 5454:80
     environment:
       PGADMIN_DEFAULT_PASSWORD: flexdoc99
-      PGADMIN_DEFAULT_EMAIL: user@email.com
-    depends_on:
-      postgresql:
-        condition: service_healthy
+      PGADMIN_DEFAULT_EMAIL: admin@flexdoc.com.br
+    # depends_on:
+    #   postgresql:
+    #     condition: service_healthy
     restart: unless-stopped
 
   mongodb:
@@ -74,24 +73,24 @@ services:
       - bancos-net
       - flexdoc-net
 
-  mongo-express:
-    container_name: mongo-express
-    image: mongo-express:latest
-    ports:
-      - 17000:8081
-    depends_on:
-      mongodb:
-        condition: service_started
-    environment:
-      ME_CONFIG_MONGODB_SERVER: mongodb
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: flexdoc99
-      ME_CONFIG_BASICAUTH_USERNAME: admin
-      ME_CONFIG_BASICAUTH_PASSWORD: admin
-    restart: unless-stopped
-    networks:
-      - bancos-net
-      - flexdoc-net
+  # mongo-express:
+  #   container_name: mongo-express
+  #   image: mongo-express:latest
+  #   ports:
+  #     - 17000:8081
+  #   depends_on:
+  #     mongodb:
+  #       condition: service_started
+  #   environment:
+  #     ME_CONFIG_MONGODB_SERVER: mongodb
+  #     ME_CONFIG_MONGODB_ADMINUSERNAME: root
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: flexdoc99
+  #     ME_CONFIG_BASICAUTH_USERNAME: admin
+  #     ME_CONFIG_BASICAUTH_PASSWORD: admin
+  #   restart: unless-stopped
+  #   networks:
+  #     - bancos-net
+  #     - flexdoc-net
 
 networks:
   bancos-net:
