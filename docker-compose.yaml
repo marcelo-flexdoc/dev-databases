@@ -9,15 +9,17 @@ version: "3.9"
 
 services:
   mysql:
+    privileged: true
     container_name: mysql
-    image: bitnami/mysql:latest
+    image: bitnami/mysql:5.7
     ports:
       - 3306:3306
     volumes:
-      - "./volumes/mysql:/bitnami/mysql"
+      - "./volumes/mysql/data:/bitnami/mysql/data"
     environment:
       MYSQL_ROOT_USER: root
       MYSQL_ROOT_PASSWORD: flexdoc99
+      MYSQL_DATABASE: test
     restart: unless-stopped
     networks:
       - bancos-net
@@ -29,7 +31,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - "./volumes/postgres:/bitnami/postgresql"
+      - "./volumes/postgres/data:/bitnami/postgresql/data"
     environment:
       POSTGRESQL_PASSWORD: flexdoc99
     healthcheck:
@@ -63,7 +65,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - "./volumes/mongodb:/bitnami/mongodb"
+      - "./volumes/mongodb/data:/bitnami/mongodb/data"
     environment:
       MONGODB_ROOT_USER: root
       MONGODB_ROOT_PASSWORD: flexdoc99

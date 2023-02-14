@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  mysql:
+    user: "1000"
+    privileged: true
+    container_name: mysql-5.7
+    image: bitnami/mysql:5.7
+    ports:
+      - 3306:3306
+    volumes:
+      - "/opt/mysql/data:/bitnami/mysql/data:rw"
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: flexdoc99
+      MYSQL_DATABASE: test
+    restart: always
