@@ -10,6 +10,7 @@ docker network create flexdoc-net
 ```bash
 # este diretório deve ficar no mesmo nível do docker-compose.yaml
 mkdir -p volumes volumes/mysql volumes/postgres volumes/mongodb
+chmod a+rwx volumes
 ```
 
 ## Comando para rodar o docker compose e baixar/executar os containers
